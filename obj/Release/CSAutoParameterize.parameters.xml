@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="SurfergraphyContext-Web.config Connection String" description="SurfergraphyContext 데이터베이스에 액세스하기 위해 응용 프로그램에 의해 web.config에 사용된 연결 문자열입니다." defaultValue="Data Source=surfergraphy.database.windows.net; Initial Catalog=Surfergraphy; Persist Security Info=True; User ID=surfergraphy;Password=eoqkrskwk123GO" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\Git\\SurfergraphyApi\\SurfergraphyApi\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SurfergraphyContext']/@connectionString" />
+  </parameter>
+</parameters>

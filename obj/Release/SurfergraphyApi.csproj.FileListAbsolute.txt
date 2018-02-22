@@ -212,6 +212,3 @@ D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.csprojResolve
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.csproj.CoreCompileInputs.cache
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.dll
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.pdb
-D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.Migrations.Init.resources
-D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.csproj.GenerateResource.Cache
-D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.Migrations.ChangePhoto.resources
