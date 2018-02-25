@@ -236,16 +236,26 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhotoBuyHistoriesController.cs" />
+    <Compile Include="Controllers\LikePhotosController.cs" />
     <Compile Include="Controllers\PhotoSaveHistoriesController.cs" />
+    <Compile Include="Controllers\PhotographerController.cs" />
     <Compile Include="Controllers\PhotosController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\UserPhotosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802220807304_surfergraphy.cs" />
-    <Compile Include="Migrations\201802220807304_surfergraphy.Designer.cs">
-      <DependentUpon>201802220807304_surfergraphy.cs</DependentUpon>
+    <Compile Include="Migrations\201802250113258_init.cs" />
+    <Compile Include="Migrations\201802250113258_init.Designer.cs">
+      <DependentUpon>201802250113258_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802250132200_init_1.cs" />
+    <Compile Include="Migrations\201802250132200_init_1.Designer.cs">
+      <DependentUpon>201802250132200_init_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802250644312_init_2.cs" />
+    <Compile Include="Migrations\201802250644312_init_2.Designer.cs">
+      <DependentUpon>201802250644312_init_2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -255,7 +265,9 @@
     <Compile Include="Models\PhotoBuyHistory.cs" />
     <Compile Include="Models\PhotoBuyHistoryBindingModel.cs" />
     <Compile Include="Models\AdminUser.cs" />
+    <Compile Include="Models\LikePhoto.cs" />
     <Compile Include="Models\PhotoSaveHistory.cs" />
+    <Compile Include="Models\LikePhotoBindingModel.cs" />
     <Compile Include="Models\PhotoSaveHistoryBindingModel.cs" />
     <Compile Include="Models\Purchase.cs" />
     <Compile Include="Models\UserPhoto.cs" />
@@ -299,7 +311,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\SurfergraphyApi - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\SurfergraphyApi20180222045217 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -345,8 +356,14 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201802220807304_surfergraphy.resx">
-      <DependentUpon>201802220807304_surfergraphy.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201802250113258_init.resx">
+      <DependentUpon>201802250113258_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802250132200_init_1.resx">
+      <DependentUpon>201802250132200_init_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802250644312_init_2.resx">
+      <DependentUpon>201802250644312_init_2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -41,6 +41,8 @@ namespace SurfergraphyApi.Models
 
         public System.Data.Entity.DbSet<SurfergraphyApi.Models.PhotoBuyHistory> PhotoBuyHistories { get; set; }
 
+        public System.Data.Entity.DbSet<SurfergraphyApi.Models.LikePhoto> LikePhotos { get; set; }
+
         public System.Data.Entity.DbSet<SurfergraphyApi.Models.Purchase> Purchases { get; set; }
 
         public System.Data.Entity.DbSet<SurfergraphyApi.Models.AdminUser> AdminUsers { get; set; }
