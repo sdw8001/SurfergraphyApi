@@ -19,10 +19,10 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressSSLPort>44363</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -257,6 +257,18 @@
     <Compile Include="Migrations\201802250644312_init_2.Designer.cs">
       <DependentUpon>201802250644312_init_2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802280237133_init_3.cs" />
+    <Compile Include="Migrations\201802280237133_init_3.Designer.cs">
+      <DependentUpon>201802280237133_init_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802280736542_init_4.cs" />
+    <Compile Include="Migrations\201802280736542_init_4.Designer.cs">
+      <DependentUpon>201802280736542_init_4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802280743140_init_5.cs" />
+    <Compile Include="Migrations\201802280743140_init_5.Designer.cs">
+      <DependentUpon>201802280743140_init_5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -364,6 +376,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802250644312_init_2.resx">
       <DependentUpon>201802250644312_init_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802280237133_init_3.resx">
+      <DependentUpon>201802280237133_init_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802280736542_init_4.resx">
+      <DependentUpon>201802280736542_init_4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802280743140_init_5.resx">
+      <DependentUpon>201802280743140_init_5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

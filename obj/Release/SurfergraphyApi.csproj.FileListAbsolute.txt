@@ -208,7 +208,6 @@ D:\Git\SurfergraphyApi\SurfergraphyApi\bin\ko\Microsoft.Owin.Security.Google.res
 D:\Git\SurfergraphyApi\SurfergraphyApi\bin\ko\Microsoft.Owin.Security.Twitter.resources.dll
 D:\Git\SurfergraphyApi\SurfergraphyApi\bin\ko\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
 D:\Git\SurfergraphyApi\SurfergraphyApi\bin\ko\System.Web.Http.Owin.resources.dll
-D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.csprojResolveAssemblyReference.cache
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.csproj.CoreCompileInputs.cache
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.dll
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.pdb
@@ -216,3 +215,6 @@ D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.Migrations.in
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.csproj.GenerateResource.Cache
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.Migrations.init_1.resources
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.Migrations.init_2.resources
+D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.Migrations.init_3.resources
+D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.Migrations.init_4.resources
+D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.Migrations.init_5.resources
