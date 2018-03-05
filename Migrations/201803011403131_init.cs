@@ -23,6 +23,19 @@ namespace SurfergraphyApi.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.LikePhotoes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        UserId = c.String(),
+                        PhotoId = c.Int(nullable: false),
+                        PhotoBuyHistoryId = c.Int(nullable: false),
+                        Deleted = c.Boolean(nullable: false),
+                        Date = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.PhotoBuyHistories",
                 c => new
                     {
@@ -71,12 +84,16 @@ namespace SurfergraphyApi.Migrations
                 c => new
                     {
                         OrderId = c.String(nullable: false, maxLength: 128),
+                        UserId = c.String(),
+                        ItemType = c.String(),
                         PackageName = c.String(),
-                        ProductId = c.String(),
+                        Sku = c.String(),
                         PurchaseTime = c.Long(nullable: false),
                         PurchaseState = c.Int(nullable: false),
                         DeveloperPayload = c.String(),
                         PurchaseToken = c.String(),
+                        OriginalJson = c.String(),
+                        Signature = c.String(),
                     })
                 .PrimaryKey(t => t.OrderId);
             
@@ -188,6 +205,7 @@ namespace SurfergraphyApi.Migrations
             DropTable("dbo.PhotoSaveHistories");
             DropTable("dbo.Photos");
             DropTable("dbo.PhotoBuyHistories");
+            DropTable("dbo.LikePhotoes");
             DropTable("dbo.AdminUsers");
         }
     }
