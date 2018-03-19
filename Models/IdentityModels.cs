@@ -46,5 +46,7 @@ namespace SurfergraphyApi.Models
         public System.Data.Entity.DbSet<SurfergraphyApi.Models.Purchase> Purchases { get; set; }
 
         public System.Data.Entity.DbSet<SurfergraphyApi.Models.AdminUser> AdminUsers { get; set; }
+
+        public System.Data.Entity.DbSet<SurfergraphyApi.Models.Member> Members { get; set; }
     }
 }

@@ -85,8 +85,8 @@ namespace SurfergraphyApi.Controllers
 
             int purchasedWave = 0;
             purchasedWave = Convert.ToInt16(purchase.Sku.Replace("wave", ""));
-            var user = db.Users.Find(User.Identity.GetUserId());
-            user.Wave = user.Wave + purchasedWave;
+            var member = db.Members.Find(purchase.UserId);
+            member.Wave = member.Wave + purchasedWave;
 
             try
             {

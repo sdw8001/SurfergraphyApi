@@ -13,7 +13,7 @@ using SurfergraphyApi.Models;
 
 namespace SurfergraphyApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class UserPhotosController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();

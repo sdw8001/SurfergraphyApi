@@ -59,11 +59,11 @@ namespace SurfergraphyApi
             //    appId: "",
             //    appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "322512480922-u4qtig19717mjctcfgc9mvuej1713hpb.apps.googleusercontent.com",
+                ClientSecret = "IQz9UZ-X-NLzBtFQK47zWK9t"
+            });
         }
     }
 }

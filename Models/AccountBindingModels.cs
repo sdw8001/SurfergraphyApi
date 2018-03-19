@@ -35,29 +35,35 @@ namespace SurfergraphyApi.Models
     public class RegisterBindingModel
     {
         [Required]
+        [Display(Name = "아이디")]
+        public string Id { get; set; }
+
+        [Required]
         [Display(Name = "전자 메일")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "{0}은(는) {2}자 이상이어야 합니다.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "암호")]
-        public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "암호 확인")]
-        [Compare("Password", ErrorMessage = "암호와 확인 암호가 일치하지 않습니다.")]
-        public string ConfirmPassword { get; set; }
+        [Display(Name = "가입 SNS 타입")]
+        public string JoinType { get; set; }
 
         [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "닉네임")]
-        public string NickName { get; set; }
+        [Display(Name = "이름")]
+        public string Name { get; set; }
 
         [Required]
-        [DataType(DataType.PhoneNumber)]
-        [Display(Name = "휴대폰 번호")]
-        public string PhoneNumber { get; set; }
+        [Display(Name = "프로필 ImageUrl")]
+        public string ImageUrl { get; set; }
+    }
+
+    public class LoginBindingModel
+    {
+        [Required]
+        [Display(Name = "아이디")]
+        public string Id { get; set; }
+
+        [Required]
+        [Display(Name = "외부 액세스 토큰")]
+        public string LoginToken { get; set; }
     }
 
     public class RegisterExternalBindingModel
@@ -65,6 +71,11 @@ namespace SurfergraphyApi.Models
         [Required]
         [Display(Name = "전자 메일")]
         public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "닉네임")]
+        public string NickName { get; set; }
     }
 
     public class RemoveLoginBindingModel

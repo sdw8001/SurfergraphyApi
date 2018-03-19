@@ -16,7 +16,7 @@ using Microsoft.Owin.Security;
 
 namespace SurfergraphyApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class LikePhotosController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -40,20 +40,11 @@ namespace SurfergraphyApi.Controllers
             return db.LikePhotos;
         }
 
-        // GET: api/LikePhotos/UserPhotos
-        [Route("api/LikePhotos/UserPhotos")]
-        public IQueryable<LikePhoto> GetUserLikePhotos()
+        // GET: api/LikePhotos/UserPhotos/{memberId}
+        [Route("api/LikePhotos/UserPhotos/{memberId}")]
+        public IQueryable<LikePhoto> GetUserLikePhotos(string memberId)
         {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            return db.LikePhotos.Where(photo => photo.UserId == user.Id);
-        }
-
-        // GET: api/LikePhotos/UserPhotos/{photoId}
-        [Route("api/LikePhotos/UserPhotos/{photoId}")]
-        public IQueryable<LikePhoto> GetPhotoSaveHistoryPhoto(int photoId)
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            return db.LikePhotos.Where(photo => photo.UserId == user.Id).Where(photo => photo.PhotoId == photoId);
+            return db.LikePhotos.Where(photo => photo.UserId == memberId);
         }
 
         // GET: api/LikePhotos/5

@@ -23,5 +23,13 @@ namespace SurfergraphyApi.Models
         public int Resolution { get; set; }
         public DateTime Date { get; set; }
         public DateTime ExpirationDate { get; set; }
+        public bool Valid { get; set; }
+        public bool Expired { get; set; }
+
+        public Photo()
+        {
+            Valid = true;
+            Expired = false;
+        }
     }
 }

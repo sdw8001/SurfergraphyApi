@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -11,12 +10,11 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using SurfergraphyApi.Models;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.AspNet.Identity;
 using SurfergraphyApi.Utils;
 
 namespace SurfergraphyApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class PhotoBuyHistoriesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -40,20 +38,11 @@ namespace SurfergraphyApi.Controllers
             return db.PhotoBuyHistories;
         }
 
-        // GET: api/PhotoBuyHistories/UserPhotos
-        [Route("api/PhotoBuyHistories/UserPhotos")]
-        public IQueryable<PhotoBuyHistory> GetPhotoBuyHistoryPhotos()
+        // GET: api/PhotoBuyHistories/UserPhotos/{memberId}
+        [Route("api/PhotoBuyHistories/UserPhotos/{memberId}")]
+        public IQueryable<PhotoBuyHistory> GetPhotoBuyHistoryPhotos(string memberId)
         {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            return db.PhotoBuyHistories.Where(photo => photo.UserId == user.Id);
-        }
-
-        // GET: api/PhotoBuyHistories/UserPhotos/{photoId}
-        [Route("api/PhotoBuyHistories/UserPhotos/{photoId}")]
-        public IQueryable<PhotoBuyHistory> GetPhotoBuyHistoryPhoto(int photoId)
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            return db.PhotoBuyHistories.Where(photo => photo.UserId == user.Id).Where(photo => photo.PhotoId == photoId);
+            return db.PhotoBuyHistories.Where(photo => photo.UserId == memberId);
         }
 
         // GET: api/PhotoBuyHistories/5
@@ -113,7 +102,7 @@ namespace SurfergraphyApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = db.Users.Find(User.Identity.GetUserId());
+            var member = db.Members.Find(model.UserId);
             var photo = db.Photos.Find(model.PhotoId);
             if (photo == null)
             {
@@ -125,7 +114,7 @@ namespace SurfergraphyApi.Controllers
 
                 return ResponseMessage(response);
             }
-            if (user.Wave < photo.Wave)
+            if (member.Wave < photo.Wave)
             {
                 // 구매에 필요한 Wave가 부족합니다.                    
                 var error = new HttpError();
@@ -135,7 +124,7 @@ namespace SurfergraphyApi.Controllers
 
                 return ResponseMessage(response);
             }
-            user.Wave = user.Wave - photo.Wave;
+            member.Wave = member.Wave - photo.Wave;
             var photoBuyHistory = new PhotoBuyHistory()
             {
                 UserId = model.UserId,

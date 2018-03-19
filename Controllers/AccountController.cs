@@ -20,7 +20,7 @@ using System.Text;
 
 namespace SurfergraphyApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
@@ -326,27 +326,27 @@ namespace SurfergraphyApi.Controllers
         }
 
         // POST api/Account/Register
-        [AllowAnonymous]
-        [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[AllowAnonymous]
+        //[Route("Register")]
+        //public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber, NickName = model.NickName };
+        //    var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber, NickName = model.NickName };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+        //    IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
+        //    if (!result.Succeeded)
+        //    {
+        //        return GetErrorResult(result);
+        //    }
 
 
-            return Ok(user);
-        }
+        //    return Ok(user);
+        //}
 
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
@@ -365,7 +365,7 @@ namespace SurfergraphyApi.Controllers
                 return InternalServerError();
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, NickName = model.NickName };
 
             IdentityResult result = await UserManager.CreateAsync(user);
             if (!result.Succeeded)

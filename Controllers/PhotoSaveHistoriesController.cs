@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -10,13 +9,11 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using SurfergraphyApi.Models;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 
 namespace SurfergraphyApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class PhotoSaveHistoriesController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -40,20 +37,11 @@ namespace SurfergraphyApi.Controllers
             return db.PhotoSaveHistories;
         }
 
-        // GET: api/PhotoSaveHistories/UserPhotos
-        [Route("api/PhotoSaveHistories/UserPhotos")]
-        public IQueryable<PhotoSaveHistory> GetPhotoSaveHistoryPhotos()
+        // GET: api/PhotoSaveHistories/UserPhotos/{memberId}
+        [Route("api/PhotoSaveHistories/UserPhotos/{memberId}")]
+        public IQueryable<PhotoSaveHistory> GetPhotoSaveHistoryPhotos(string memberId)
         {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            return db.PhotoSaveHistories.Where(photo => photo.UserId == user.Id);
-        }
-
-        // GET: api/PhotoSaveHistories/UserPhotos/{photoId}
-        [Route("api/PhotoSaveHistories/UserPhotos/{photoId}")]
-        public IQueryable<PhotoSaveHistory> GetPhotoSaveHistoryPhoto(int photoId)
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            return db.PhotoSaveHistories.Where(photo => photo.UserId == user.Id).Where(photo => photo.PhotoId == photoId);
+            return db.PhotoSaveHistories.Where(photo => photo.UserId == memberId);
         }
 
         // GET: api/PhotoSaveHistories/5
