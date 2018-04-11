@@ -14,6 +14,7 @@ using SurfergraphyApi.Utils;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Web.Hosting;
 using System.IO;
+using Microsoft.WindowsAzure.Storage;
 
 namespace SurfergraphyApi.Controllers
 {
@@ -25,14 +26,14 @@ namespace SurfergraphyApi.Controllers
         // GET: api/Photos
         public IQueryable<Photo> GetPhotos()
         {
-            return db.Photos;
+            return db.Photos.OrderByDescending(photo => photo.Id);
         }
 
         // GET: api/Photos
         [Route("api/Photos/Place/{place}")]
         public IQueryable<Photo> GetPlacePhotos(string place)
         {
-            return db.Photos.Where(photo => photo.Place == place);
+            return db.Photos.Where(photo => photo.Place == place).OrderByDescending(photo => photo.Id);
         }
 
         // GET: api/Photos/5
@@ -147,6 +148,63 @@ namespace SurfergraphyApi.Controllers
             await db.SaveChangesAsync();
 
             return Ok(photo);
+        }
+
+        // POST: api/Photos/DeleteExpired
+        [Route("api/Photos/DeleteExpired")]
+        public IHttpActionResult DeleteExpired()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var expiredPhotos = db.Photos.Where(x => x.ExpirationDate <= DateTime.Now).Where(x => x.Expired == false);
+
+            // Retrieve storage account from connection string.
+            CloudStorageAccount storageAccount = ConnectionManager.GetCloudStorageAcount();
+
+            // Create the blob client.
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer photosContainer = blobClient.GetContainerReference("photos");
+            foreach (Photo expiredPhoto in expiredPhotos) { 
+                // Retrieve reference to a blob named "myblob".
+                CloudBlockBlob profileBlockBlob = photosContainer.GetBlockBlobReference(expiredPhoto.Name);
+                if (profileBlockBlob.DeleteIfExists())
+                {
+                    expiredPhoto.Expired = true;
+
+                    var expiredLikePhotos = db.LikePhotos.Where(x => x.PhotoId == expiredPhoto.Id);
+                    foreach (LikePhoto expiredLikePhoto in expiredLikePhotos)
+                    {
+                        expiredLikePhoto.Deleted = true;
+                    }
+
+                    var expiredUserPhotos = db.UserPhotoes.Where(x => x.PhotoId == expiredPhoto.Id);
+                    foreach (UserPhoto expiredUserPhoto in expiredUserPhotos)
+                    {
+                        expiredUserPhoto.Deleted = true;
+                    }
+
+                    var expiredPhotoSaveHistories = db.PhotoSaveHistories.Where(x => x.PhotoId == expiredPhoto.Id);
+                    foreach (PhotoSaveHistory expiredPhotoSaveHistory in expiredPhotoSaveHistories)
+                    {
+                        expiredPhotoSaveHistory.Deleted = true;
+                    }
+                }
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+            }
+
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)

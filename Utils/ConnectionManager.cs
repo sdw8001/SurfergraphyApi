@@ -12,10 +12,9 @@ namespace SurfergraphyApi.Utils
     {
         public static CloudStorageAccount GetCloudStorageAcount()
         {
-            var accountName = ConfigurationManager.AppSettings["storage:account:name"];
-            var accountKey = ConfigurationManager.AppSettings["storage:account:key"];
+            var connectionString = "DefaultEndpointsProtocol=https;AccountName=surfergraphystorage;AccountKey=C79IdVQVXn2zHO9C/gZAC3Lo50pHkz8pRvvC0QvwgqjylqjsyMLRG1EitWaLGF/UJvGLDZ61dhfn0Rpk+s90zQ==;EndpointSuffix=core.windows.net";
 
-            return new CloudStorageAccount(new StorageCredentials(accountName, accountKey), true);
+            return CloudStorageAccount.Parse(connectionString);
         }
     }
 }
