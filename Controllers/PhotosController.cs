@@ -158,8 +158,12 @@ namespace SurfergraphyApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var expiredPhotos = db.Photos.Where(x => x.ExpirationDate <= DateTime.Now).Where(x => x.Expired == false);
+            
+            var expiredPhotos = from photo in db.Photos
+                                join buyPhoto in db.PhotoBuyHistories on photo.Id equals buyPhoto.PhotoId into o
+                                from buyPhoto in o.DefaultIfEmpty()
+                                where buyPhoto.UserId == null && photo.ExpirationDate <= DateTime.Now && photo.Expired == false
+                                select photo;
 
             // Retrieve storage account from connection string.
             CloudStorageAccount storageAccount = ConnectionManager.GetCloudStorageAcount();
@@ -176,18 +180,21 @@ namespace SurfergraphyApi.Controllers
                 {
                     expiredPhoto.Expired = true;
 
+                    // 좋아요 포토 Deleted 처리
                     var expiredLikePhotos = db.LikePhotos.Where(x => x.PhotoId == expiredPhoto.Id);
                     foreach (LikePhoto expiredLikePhoto in expiredLikePhotos)
                     {
                         expiredLikePhoto.Deleted = true;
                     }
 
+                    // 유저 다운로드 사진 Deleted 처리
                     var expiredUserPhotos = db.UserPhotoes.Where(x => x.PhotoId == expiredPhoto.Id);
                     foreach (UserPhoto expiredUserPhoto in expiredUserPhotos)
                     {
                         expiredUserPhoto.Deleted = true;
                     }
 
+                    // 유저 저장 사진 Deleted 처리
                     var expiredPhotoSaveHistories = db.PhotoSaveHistories.Where(x => x.PhotoId == expiredPhoto.Id);
                     foreach (PhotoSaveHistory expiredPhotoSaveHistory in expiredPhotoSaveHistories)
                     {
