@@ -88,6 +88,7 @@ namespace SurfergraphyApi.Controllers
         [ResponseType(typeof(Photo))]
         public async Task<IHttpActionResult> PostPhoto()
         {
+            // api 로 파일등록부분인데 초기 photo 클래스로 구현테스트 한적이 있다. 해당부분 활용하려면 활용시점 photo 클래스 생성부분에 추가된 parameter 확인후 수정 필요함.
             // Generate a new filename for every new blob
             var fileName = Guid.NewGuid().ToString();
             var storageAccount = ConnectionManager.GetCloudStorageAcount();

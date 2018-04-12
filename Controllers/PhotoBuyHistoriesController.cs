@@ -130,7 +130,9 @@ namespace SurfergraphyApi.Controllers
                 UserId = model.UserId,
                 PhotoId = model.PhotoId,
                 Wave = photo.Wave,
-                Date = DateTime.Now
+                Date = DateTime.Now,
+                Paid = false,
+                PaidDate = DateTime.Now
             };
 
 
