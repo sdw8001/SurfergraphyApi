@@ -16,5 +16,7 @@ namespace SurfergraphyApi.Models
         public int PhotoId { get; set; }
         public int Wave { get; set; }
         public DateTime Date { get; set; }
+        public bool Paid { get; set; }
+        public DateTime PaidDate { get; set; }
     }
 }

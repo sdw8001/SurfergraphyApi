@@ -242,3 +242,4 @@ D:\Git\SurfergraphyApi\SurfergraphyApi\bin\ServiceStack.Text.xml
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Debug\SurfergraphyApi.Migrations.create_member.resources
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Debug\SurfergraphyApi.Migrations.member1.resources
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Debug\SurfergraphyApi.csprojResolveAssemblyReference.cache
+D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Debug\SurfergraphyApi.Migrations.photobuyhistory1.resources
