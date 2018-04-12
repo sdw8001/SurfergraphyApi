@@ -21,6 +21,7 @@ namespace SurfergraphyApi.Models
         public int DimensionWidth { get; set; }
         public int DimensionHeight { get; set; }
         public int Resolution { get; set; }
+        public int TotalCount { get; set; }
         public DateTime Date { get; set; }
         public DateTime ExpirationDate { get; set; }
         public bool Valid { get; set; }

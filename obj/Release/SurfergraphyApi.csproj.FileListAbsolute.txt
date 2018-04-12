@@ -242,3 +242,5 @@ D:\Git\SurfergraphyApi\SurfergraphyApi\bin\ServiceStack.Text.pdb
 D:\Git\SurfergraphyApi\SurfergraphyApi\bin\ServiceStack.Text.xml
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.Migrations.create_member.resources
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.Migrations.member1.resources
+D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.Migrations.photobuyhistory1.resources
+D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Release\SurfergraphyApi.Migrations.photo1.resources
