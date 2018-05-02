@@ -18,13 +18,16 @@ namespace SurfergraphyApi.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/UserPhotoes
+        // GET: api/UserPhotos
         public IQueryable<UserPhoto> GetUserPhotoes()
         {
-            return db.UserPhotoes;
+
+            return from userPhoto in db.UserPhotoes
+                   join photo in db.Photos on userPhoto.PhotoId equals photo.Id
+                   select userPhoto;
         }
 
-        // GET: api/UserPhotoes/5
+        // GET: api/UserPhotos/5
         [ResponseType(typeof(UserPhoto))]
         public async Task<IHttpActionResult> GetUserPhoto(int id)
         {

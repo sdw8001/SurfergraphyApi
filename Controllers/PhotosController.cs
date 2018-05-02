@@ -23,17 +23,111 @@ namespace SurfergraphyApi.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        // GET: api/Photo/UserPhotos/{userId}
+        [Route("api/Photo/UserPhotos/{userId}")]
+        public IQueryable<Photo> GetPhotoFromUserPhotoByUser(string userId)
+        {
+            return from photo in db.Photos
+                   join userPhoto in db.UserPhotoes on photo.Id equals userPhoto.PhotoId
+                   where userPhoto.UserId == userId
+                   select photo;
+        }
+
+        // GET: api/Photo/LikePhotos/{userId}
+        [Route("api/Photo/LikePhotos/{userId}")]
+        public IQueryable<Photo> GetPhotoFromLikePhotoByUser(string userId)
+        {
+            return from photo in db.Photos
+                   join likePhoto in db.LikePhotos on photo.Id equals likePhoto.PhotoId
+                   where likePhoto.UserId == userId
+                   select photo;
+        }
+
+        // GET: api/Photos
+        [Route("api/Dates")]
+        public async Task<IHttpActionResult> GetDates()
+        {
+            var photos = from photo in db.Photos
+                                where photo.Valid == true && photo.Expired == false
+                                select photo;
+
+            List<string> dateStrings = new List<string>();
+            List<PhotoDate> dates = new List<PhotoDate>();
+            foreach (var photo in photos)
+            {
+                dateStrings.Add(photo.Date.ToString("yyyyMMdd"));
+            }
+
+            foreach(string dateString in dateStrings.Distinct())
+            {
+                PhotoDate photoDate = new PhotoDate();
+                photoDate.DateString = dateString;
+                dates.Add(photoDate);
+            }
+
+            return Ok(dates.Distinct().OrderByDescending(photoDate => photoDate.DateString));
+        }
+
+        // GET: api/Photos
+        [Route("api/Dates/Place/{place}")]
+        public async Task<IHttpActionResult> GetPlaceDates(string place)
+        {
+            var photos = from photo in db.Photos
+                            where photo.Valid == true && photo.Expired == false && photo.Place == place
+                         select photo;
+
+            List<string> dateStrings = new List<string>();
+            List<PhotoDate> dates = new List<PhotoDate>();
+            foreach (var photo in photos)
+            {
+                dateStrings.Add(photo.Date.ToString("yyyyMMdd"));
+            }
+
+            foreach (string dateString in dateStrings.Distinct())
+            {
+                PhotoDate photoDate = new PhotoDate();
+                photoDate.DateString = dateString;
+                dates.Add(photoDate);
+            }
+
+            return Ok(dates.Distinct().OrderByDescending(photoDate => photoDate.DateString));
+        }
+
         // GET: api/Photos
         public IQueryable<Photo> GetPhotos()
         {
-            return db.Photos.OrderByDescending(photo => photo.Id);
+            return db.Photos.Where(photo => photo.Valid == true && photo.Expired == false).OrderByDescending(photo => photo.Id);
+        }
+
+        // GET: api/Photos
+        [Route("api/Photos/Date/{date}")]
+        public IQueryable<Photo> GetDatePhotos(string date)
+        {
+            string strStartDate = date + "000000";
+            string strEndDate = date + "235959";
+            string format = "yyyyMMddHHmmss";
+            DateTime startDate = DateTime.ParseExact(strStartDate, format, null);
+            DateTime endDate = DateTime.ParseExact(strEndDate, format, null);
+            return db.Photos.Where(photo => photo.Valid == true && photo.Expired == false && photo.Date >= startDate && photo.Date <= endDate).OrderByDescending(photo => photo.Id);
         }
 
         // GET: api/Photos
         [Route("api/Photos/Place/{place}")]
         public IQueryable<Photo> GetPlacePhotos(string place)
         {
-            return db.Photos.Where(photo => photo.Place == place).OrderByDescending(photo => photo.Id);
+            return db.Photos.Where(photo => photo.Valid == true && photo.Expired == false && photo.Place == place).OrderByDescending(photo => photo.Id);
+        }
+
+        // GET: api/Photos
+        [Route("api/Photos/Place/Date/{place}/{date}")]
+        public IQueryable<Photo> GetPlaceDatePhotos(string place, string date)
+        {
+            string strStartDate = date + "000000";
+            string strEndDate = date + "235959";
+            string format = "yyyyMMddHHmmss";
+            DateTime startDate = DateTime.ParseExact(strStartDate, format, null);
+            DateTime endDate = DateTime.ParseExact(strEndDate, format, null);
+            return db.Photos.Where(photo => photo.Valid == true && photo.Expired == false && photo.Place == place && photo.Date >= startDate && photo.Date <= endDate).OrderByDescending(photo => photo.Id);
         }
 
         // GET: api/Photos/5
@@ -152,6 +246,7 @@ namespace SurfergraphyApi.Controllers
         }
 
         // POST: api/Photos/DeleteExpired
+        [HttpPost]
         [Route("api/Photos/DeleteExpired")]
         public IHttpActionResult DeleteExpired()
         {
@@ -159,7 +254,7 @@ namespace SurfergraphyApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             var expiredPhotos = from photo in db.Photos
                                 join buyPhoto in db.PhotoBuyHistories on photo.Id equals buyPhoto.PhotoId into o
                                 from buyPhoto in o.DefaultIfEmpty()
@@ -174,44 +269,44 @@ namespace SurfergraphyApi.Controllers
 
             // Retrieve reference to a previously created container.
             CloudBlobContainer photosContainer = blobClient.GetContainerReference("photos");
-            foreach (Photo expiredPhoto in expiredPhotos) { 
+            foreach (Photo expiredPhoto in expiredPhotos.ToList())
+            {
                 // Retrieve reference to a blob named "myblob".
                 CloudBlockBlob profileBlockBlob = photosContainer.GetBlockBlobReference(expiredPhoto.Name);
-                if (profileBlockBlob.DeleteIfExists())
+                profileBlockBlob.DeleteIfExists();
+
+                expiredPhoto.Expired = true;
+
+                // 좋아요 포토 Deleted 처리
+                var expiredLikePhotos = db.LikePhotos.Where(x => x.PhotoId == expiredPhoto.Id);
+                foreach (LikePhoto expiredLikePhoto in expiredLikePhotos)
                 {
-                    expiredPhoto.Expired = true;
+                    expiredLikePhoto.Deleted = true;
+                }
 
-                    // 좋아요 포토 Deleted 처리
-                    var expiredLikePhotos = db.LikePhotos.Where(x => x.PhotoId == expiredPhoto.Id);
-                    foreach (LikePhoto expiredLikePhoto in expiredLikePhotos)
-                    {
-                        expiredLikePhoto.Deleted = true;
-                    }
+                // 유저 다운로드 사진 Deleted 처리
+                var expiredUserPhotos = db.UserPhotoes.Where(x => x.PhotoId == expiredPhoto.Id);
+                foreach (UserPhoto expiredUserPhoto in expiredUserPhotos)
+                {
+                    expiredUserPhoto.Deleted = true;
+                }
 
-                    // 유저 다운로드 사진 Deleted 처리
-                    var expiredUserPhotos = db.UserPhotoes.Where(x => x.PhotoId == expiredPhoto.Id);
-                    foreach (UserPhoto expiredUserPhoto in expiredUserPhotos)
-                    {
-                        expiredUserPhoto.Deleted = true;
-                    }
+                // 유저 저장 사진 Deleted 처리
+                var expiredPhotoSaveHistories = db.PhotoSaveHistories.Where(x => x.PhotoId == expiredPhoto.Id);
+                foreach (PhotoSaveHistory expiredPhotoSaveHistory in expiredPhotoSaveHistories)
+                {
+                    expiredPhotoSaveHistory.Deleted = true;
+                }
 
-                    // 유저 저장 사진 Deleted 처리
-                    var expiredPhotoSaveHistories = db.PhotoSaveHistories.Where(x => x.PhotoId == expiredPhoto.Id);
-                    foreach (PhotoSaveHistory expiredPhotoSaveHistory in expiredPhotoSaveHistories)
-                    {
-                        expiredPhotoSaveHistory.Deleted = true;
-                    }
+                try
+                {
+                    db.SaveChanges();
+                }
+
+                catch (DbUpdateConcurrencyException)
+                {
                 }
             }
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-            }
-
             return Ok();
         }
 

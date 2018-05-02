@@ -44,7 +44,10 @@ namespace SurfergraphyApi.Controllers
         [Route("api/LikePhotos/UserPhotos/{memberId}")]
         public IQueryable<LikePhoto> GetUserLikePhotos(string memberId)
         {
-            return db.LikePhotos.Where(photo => photo.UserId == memberId);
+            return from likePhoto in db.LikePhotos
+                   join photo in db.Photos on likePhoto.PhotoId equals photo.Id
+                   where likePhoto.UserId == memberId
+                   select likePhoto;
         }
 
         // GET: api/LikePhotos/5

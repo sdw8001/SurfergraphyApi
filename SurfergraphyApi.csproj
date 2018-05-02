@@ -305,6 +305,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Member.cs" />
+    <Compile Include="Models\PhotoDate.cs" />
     <Compile Include="Models\Photo.cs" />
     <Compile Include="Models\PhotoBuyHistory.cs" />
     <Compile Include="Models\PhotoBuyHistoryBindingModel.cs" />
