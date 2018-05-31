@@ -24,6 +24,7 @@ namespace SurfergraphyApi.Controllers
 
             return from userPhoto in db.UserPhotoes
                    join photo in db.Photos on userPhoto.PhotoId equals photo.Id
+                   where userPhoto.Deleted == false
                    select userPhoto;
         }
 
