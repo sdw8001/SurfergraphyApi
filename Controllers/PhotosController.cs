@@ -48,8 +48,10 @@ namespace SurfergraphyApi.Controllers
         public async Task<IHttpActionResult> GetDates()
         {
             var photos = from photo in db.Photos
-                                where photo.Valid == true && photo.Expired == false
-                                select photo;
+                         join buyPhoto in db.PhotoBuyHistories on photo.Id equals buyPhoto.PhotoId into o
+                         from buyPhoto in o.DefaultIfEmpty()
+                         where photo.Valid == true && photo.Expired == false && buyPhoto.UserId == null
+                         select photo;
 
             List<string> dateStrings = new List<string>();
             List<PhotoDate> dates = new List<PhotoDate>();
@@ -73,7 +75,9 @@ namespace SurfergraphyApi.Controllers
         public async Task<IHttpActionResult> GetPlaceDates(string place)
         {
             var photos = from photo in db.Photos
-                            where photo.Valid == true && photo.Expired == false && photo.Place == place
+                         join buyPhoto in db.PhotoBuyHistories on photo.Id equals buyPhoto.PhotoId into o
+                         from buyPhoto in o.DefaultIfEmpty()
+                         where photo.Valid == true && photo.Expired == false && buyPhoto.UserId == null && photo.Place == place
                          select photo;
 
             List<string> dateStrings = new List<string>();
@@ -108,14 +112,28 @@ namespace SurfergraphyApi.Controllers
             string format = "yyyyMMddHHmmss";
             DateTime startDate = DateTime.ParseExact(strStartDate, format, null);
             DateTime endDate = DateTime.ParseExact(strEndDate, format, null);
-            return db.Photos.Where(photo => photo.Valid == true && photo.Expired == false && photo.Date >= startDate && photo.Date <= endDate).OrderByDescending(photo => photo.Id);
+            var photos = from photo in db.Photos
+                         join buyPhoto in db.PhotoBuyHistories on photo.Id equals buyPhoto.PhotoId into o
+                         from buyPhoto in o.DefaultIfEmpty()
+                         where photo.Valid == true && photo.Expired == false && buyPhoto.UserId == null && photo.Date >= startDate && photo.Date <= endDate
+                         orderby photo.Id descending
+                         select photo;
+            return photos;
+            //return db.Photos.Where(photo => photo.Valid == true && photo.Expired == false && photo.Date >= startDate && photo.Date <= endDate).OrderByDescending(photo => photo.Id);
         }
 
         // GET: api/Photos
         [Route("api/Photos/Place/{place}")]
         public IQueryable<Photo> GetPlacePhotos(string place)
         {
-            return db.Photos.Where(photo => photo.Valid == true && photo.Expired == false && photo.Place == place).OrderByDescending(photo => photo.Id);
+            var photos = from photo in db.Photos
+                         join buyPhoto in db.PhotoBuyHistories on photo.Id equals buyPhoto.PhotoId into o
+                         from buyPhoto in o.DefaultIfEmpty()
+                         where photo.Valid == true && photo.Expired == false && buyPhoto.UserId == null && photo.Place == place
+                         orderby photo.Id descending
+                         select photo;
+            return photos;
+            //return db.Photos.Where(photo => photo.Valid == true && photo.Expired == false && photo.Place == place).OrderByDescending(photo => photo.Id);
         }
 
         // GET: api/Photos
@@ -127,7 +145,14 @@ namespace SurfergraphyApi.Controllers
             string format = "yyyyMMddHHmmss";
             DateTime startDate = DateTime.ParseExact(strStartDate, format, null);
             DateTime endDate = DateTime.ParseExact(strEndDate, format, null);
-            return db.Photos.Where(photo => photo.Valid == true && photo.Expired == false && photo.Place == place && photo.Date >= startDate && photo.Date <= endDate).OrderByDescending(photo => photo.Id);
+            var photos = from photo in db.Photos
+                         join buyPhoto in db.PhotoBuyHistories on photo.Id equals buyPhoto.PhotoId into o
+                         from buyPhoto in o.DefaultIfEmpty()
+                         where photo.Valid == true && photo.Expired == false && buyPhoto.UserId == null && photo.Place == place && photo.Date >= startDate && photo.Date <= endDate
+                         orderby photo.Id descending
+                         select photo;
+            return photos;
+            //return db.Photos.Where(photo => photo.Valid == true && photo.Expired == false && photo.Place == place && photo.Date >= startDate && photo.Date <= endDate).OrderByDescending(photo => photo.Id);
         }
 
         // GET: api/Photos/5

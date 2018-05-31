@@ -243,4 +243,3 @@ D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Debug\SurfergraphyApi.Migrations.crea
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Debug\SurfergraphyApi.Migrations.member1.resources
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Debug\SurfergraphyApi.Migrations.photobuyhistory1.resources
 D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Debug\SurfergraphyApi.Migrations.photo1.resources
-D:\Git\SurfergraphyApi\SurfergraphyApi\obj\Debug\SurfergraphyApi.csprojResolveAssemblyReference.cache
